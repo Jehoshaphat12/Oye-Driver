@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <!-- ── Viewport & Theme ─────────────────────────────────────────────── -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#061ffa" />
+    <meta name="background-color" content="#0215be" />
+
+    <!-- ── SEO ──────────────────────────────────────────────────────────── -->
+    <meta name="description" content="Accept ride requests, track earnings, and manage your trips with OyeRide Driver." />
+    <meta name="keywords" content="driver, ride, motorbike, delivery, okada, Ghana, OyeRide" />
+
+    <!-- ── PWA Manifest ─────────────────────────────────────────────────── -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <!-- ── Favicons ─────────────────────────────────────────────────────── -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192x192.png" />
+
+    <!-- ── Apple / iOS ──────────────────────────────────────────────────── -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="OyeRide Driver" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-startup-image" href="/icons/icon-512x512.png" />
+
+    <!-- ── Open Graph ───────────────────────────────────────────────────── -->
+    <meta property="og:title" content="OyeRide Driver" />
+    <meta property="og:description" content="Accept ride requests and manage your earnings." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/icons/icon-512x512.png" />
+
+    <!-- ── Fonts ────────────────────────────────────────────────────────── -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <title>OyeRide Driver</title>
+
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body, #root { height: 100%; width: 100%; }
+      body {
+        font-family: 'Poppins', sans-serif;
+        background: #111;
+        overflow: hidden;
+        /* Block pull-to-refresh — critical for map-based driver app */
+        overscroll-behavior: none;
+        /* Prevent text selection on long-press (feels native) */
+        -webkit-user-select: none;
+        user-select: none;
+      }
+      #root {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        background: #111;
+      }
+
+      /* ── Splash screen — appears before JS loads ── */
+      #splash {
+        position: fixed; inset: 0; z-index: 9999;
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 12px;
+        background: linear-gradient(160deg, #061ffa 0%, #0215be 60%, #030e8c 100%);
+        transition: opacity 0.4s ease;
+      }
+      #splash.hidden { opacity: 0; pointer-events: none; }
+
+      #splash-logo {
+        font-family: 'Poppins', sans-serif;
+        font-size: 38px; font-weight: 800;
+        color: #fff; letter-spacing: -0.5px;
+      }
+      #splash-badge {
+        font-family: 'Poppins', sans-serif;
+        font-size: 11px; font-weight: 700;
+        color: rgba(255,255,255,0.55);
+        letter-spacing: 5px;
+        text-transform: uppercase;
+      }
+      #splash-spinner {
+        width: 28px; height: 28px;
+        margin-top: 16px;
+        border: 3px solid rgba(255,255,255,0.2);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: _spin 0.8s linear infinite;
+      }
+      /* Inline keyframe — doesn't depend on globals.css loading first */
+      @keyframes _spin { to { transform: rotate(360deg); } }
+    </style>
+  </head>
+  <body>
+    <!-- Branded splash shown instantly from HTML, before any JS executes -->
+    <div id="splash">
+      <div id="splash-logo">OyeRide</div>
+      <div id="splash-badge">Driver Portal</div>
+      <div id="splash-spinner"></div>
+    </div>
+
+    <div id="root"></div>
+
+    <script>
+      window.__hideSplash = function () {
+        var el = document.getElementById('splash');
+        if (el) {
+          el.classList.add('hidden');
+          setTimeout(function () { el.remove(); }, 450);
+        }
+      };
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
