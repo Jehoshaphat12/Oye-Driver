@@ -93,7 +93,7 @@ export default function DriverHomePage() {
       const last7 = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
       let todayEarn = 0, weekEarn = 0, todayTrips = 0, weekTrips = 0;
       trips.filter(r => r.status === 'completed').forEach(r => {
-        const ts = r.completedAt || r.requestedAt;
+        const ts = r.completedAt || r.createdAt || r.requestedAt;
         const d = ts?.toDate ? ts.toDate() : ts ? new Date(ts) : new Date();
         const fare = Number(r.totalFare) || 0;
         if (d >= startToday) { todayEarn += fare; todayTrips++; }
@@ -124,7 +124,7 @@ export default function DriverHomePage() {
         collection(firestore, 'rides'),
         where('status', '==', 'requesting'),
         where('vehicleType', '==', vehicleType),
-        orderBy('requestedAt', 'desc'),
+        orderBy('createdAt', 'desc'),
       );
       const unsub = onSnapshot(q, snap => {
         snap.docChanges().forEach(change => {

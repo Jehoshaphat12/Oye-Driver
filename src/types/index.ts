@@ -10,10 +10,10 @@ export interface User {
   userType: 'passenger' | 'driver';
   rating: number;
   avatar?: string;
-  createdAt: Date | any;
+  createdAt?: Date | any;
   totalRides?: number;
-  fcmToken: string | null;
-  pushToken: string | null;
+  fcmToken?: string | null;
+  pushToken?: string | null;
 }
 
 export type DriverRideState =
@@ -53,8 +53,10 @@ export interface ActiveRide extends IncomingRide {
   status: string;
   totalFare?: number;
   requestedAt?: any;
+  createdAt?: any;
   completedAt?: any;
   estimatedDuration?: number;
+  destinations?: LocationPoint[];
 }
 
 export interface Driver {
@@ -66,7 +68,14 @@ export interface Driver {
   rating?: number;
   totalTrips?: number;
   isOnline?: boolean;
-  vehicle?: { vehicleType: VehicleType; vehicleNumber?: string; vehicleModel?: string };
+  isAvailable?: boolean;
+  isVerified?: boolean;
+  vehicle?: {
+    vehicleType: VehicleType;
+    vehicleNumber?: string;
+    vehicleModel?: string;
+    color?: string;
+  };
 }
 
 export interface Earnings {
@@ -82,6 +91,8 @@ export interface TripRecord {
   destinations?: LocationPoint[];
   totalFare?: number;
   status: string;
+  // All three timestamp fields — the DB may use any of them
+  createdAt?: any;
   requestedAt?: any;
   completedAt?: any;
   passengerName?: string;

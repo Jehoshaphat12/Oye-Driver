@@ -32,7 +32,7 @@ export default function EarningsPage() {
     return d >= startMonth;
   };
 
-  const completed = trips.filter(t => t.status === 'completed' && filterByPeriod(t.completedAt || t.requestedAt));
+  const completed = trips.filter(t => t.status === 'completed' && filterByPeriod(t.completedAt || t.createdAt || t.requestedAt));
   const totalEarned = completed.reduce((s, t) => s + (Number(t.totalFare) || 0), 0);
   const avgFare = completed.length > 0 ? totalEarned / completed.length : 0;
 
@@ -111,7 +111,7 @@ export default function EarningsPage() {
                     {trip.pickup?.address?.split(',')[0] || 'Pickup'} → {trip.destinations?.[0]?.address?.split(',')[0] || 'Destination'}
                   </div>
                   <div style={ss.tripPassenger}>{trip.passengerName || 'Passenger'}</div>
-                  <div style={ss.tripTime}>{fmtTime(trip.completedAt || trip.requestedAt)}</div>
+                  <div style={ss.tripTime}>{fmtTime(trip.completedAt || trip.createdAt || trip.requestedAt)}</div>
                 </div>
                 <span style={ss.tripFare}>{fmt(Number(trip.totalFare) || 0)}</span>
               </div>

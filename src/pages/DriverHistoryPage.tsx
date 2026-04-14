@@ -81,7 +81,7 @@ export default function DriverHistoryPage() {
                       {trip.pickup?.address?.split(',')[0] || '—'} → {dest?.address?.split(',')[0] || '—'}
                     </div>
                     <div style={ss.cardPassenger}>{trip.passengerName || 'Passenger'}</div>
-                    <div style={ss.cardTime}>{fmtTime(trip.completedAt || trip.requestedAt)}</div>
+                    <div style={ss.cardTime}>{fmtTime(trip.completedAt || trip.createdAt || trip.requestedAt)}</div>
                   </div>
                   <div style={ss.cardRight}>
                     <span style={ss.cardFare}>{fmt(Number(trip.totalFare) || 0)}</span>
